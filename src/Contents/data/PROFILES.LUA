@@ -1,0 +1,2 @@
+GameCore.profiles = {}
+
