@@ -1,8 +1,8 @@
 --[[ Uplink For PSP
-	Data Class definition File
-	 - Create Data Class
-	 - Creates all available data and setting sofwares
-	]]
+  Data Class definition File
+   - Create Data Class
+   - Creates all available data and setting sofwares
+  ]]
 
 Datum = {}
 ActivePID = {}
@@ -10,63 +10,63 @@ ActivePID = {}
 data = {}
 
 function Datum:new(param)
-	local f = {type = param.type,name = param.name,cpu = param.cpu or 0, size=param.size,cpuMax = param.cpuMax or 0,desc = param.desc or {['EN']='File containing crucial data.',['FR']='Fichier contenant des donnees sensibles.'},
-			cost = param.cost or 0,encryptionlvl = param.encryptionlvl or 0,version = param.version or 0,owner = param.owner or ''}
-	setmetatable(f,self)
-	self.__index = self
-	return f
+  local f = {type = param.type,name = param.name,cpu = param.cpu or 0, size=param.size,cpuMax = param.cpuMax or 0,desc = param.desc or {['EN']='File containing crucial data.',['FR']='Fichier contenant des donnees sensibles.'},
+      cost = param.cost or 0,encryptionlvl = param.encryptionlvl or 0,version = param.version or 0,owner = param.owner or ''}
+  setmetatable(f,self)
+  self.__index = self
+  return f
 end
 
 --
 function Datum:linkToFunc(f,...)
-	if self.type == 'exe' then
-		if f then self.f = f end
-	else oldprint('cannot link func to dat file') --debug
-	end
+  if self.type == 'exe' then
+    if f then self.f = f end
+  else oldprint('cannot link func to dat file') --debug
+  end
 end
 
 function Datum:execute(...)
-	if self.f then self.f(self,unpack(arg)) end
+  if self.f then self.f(self,unpack(arg)) end
 end
 --]]
 
 function Datum:isActive()
-	local PID = self.index
-	if PID then
-		for k in ipairs(ActivePID) do
-			if ActivePID[k]==PID then return k end
-		end
-	end
-	return false
+  local PID = self.index
+  if PID then
+    for k in ipairs(ActivePID) do
+      if ActivePID[k]==PID then return k end
+    end
+  end
+  return false
 end
 
 function Datum:hasEnoughCPU()
-	local consumed = 0
-	for k,PID in ipairs(ActivePID) do
-		if data[PID] then consumed = consumed+data[PID].cpu end
-	end
-	return ((Interface.currentProfile.CPU-consumed) > self.cpu)
+  local consumed = 0
+  for k,PID in ipairs(ActivePID) do
+    if data[PID] then consumed = consumed+data[PID].cpu end
+  end
+  return ((Interface.currentProfile.CPU-consumed) > self.cpu)
 end
 
 function Datum:run()
-	if self.type=='exe' then
-		if self:isActive() then
-			System.message(locale.isAlreadyActive,0)
-		else
-			if self:hasEnoughCPU() then 
-			self.cur = 1
-			--oldprint('data '..self.index..' loaded') 
-			table.insert(ActivePID,self.index)
-			else System.message(locale.notEnoughCPU,0)
-			end
-		end
-	else System.message(locale.cannotRunDat,0)
-	end
+  if self.type=='exe' then
+    if self:isActive() then
+      System.message(locale.isAlreadyActive,0)
+    else
+      if self:hasEnoughCPU() then 
+      self.cur = 1
+      --oldprint('data '..self.index..' loaded') 
+      table.insert(ActivePID,self.index)
+      else System.message(locale.notEnoughCPU,0)
+      end
+    end
+  else System.message(locale.cannotRunDat,0)
+  end
 end
 
 function Datum:close()
-	local k = self:isActive()
-	if ActivePID[k] then table.remove(ActivePID,k) end
+  local k = self:isActive()
+  if ActivePID[k] then table.remove(ActivePID,k) end
 end
 
 --create simple files
@@ -142,192 +142,192 @@ local H_software = {
 }
 
 for _,file in ipairs(Files) do 
-	table.insert(data,Datum:new{type='dat',name = file.name,size = file.size,encryptionlvl = file.encryptionlvl,owner = file.owner}) 
+  table.insert(data,Datum:new{type='dat',name = file.name,size = file.size,encryptionlvl = file.encryptionlvl,owner = file.owner}) 
 end
 
 for _,file in ipairs(H_software) do 
-	table.insert(data,Datum:new{type='exe',name = file._soft,cpu = file._cpu,cpuMax = file._cpuMax,size=file._size,desc = file._desc,cost = file._price,version = file._version}) 
-end	
+  table.insert(data,Datum:new{type='exe',name = file._soft,cpu = file._cpu,cpuMax = file._cpuMax,size=file._size,desc = file._desc,cost = file._price,version = file._version}) 
+end  
 
 for k in ipairs(data) do
-	data[k].index = searchFieldValue(data,'name',data[k].name)
+  data[k].index = searchFieldValue(data,'name',data[k].name)
 end
 
 --Specific functions for EXE softwares
 
-	function PasswordBreaker(myF,host)
-		if host and host.password then
-		--host.password = host.password..'_'
-			if host.ButtonPass and host.ButtonPass.text~= host.password then
-			host.count = host.count+1				
-				if host.count > 50 then 
-				host.count  = 0 				
-				--oldprint(myF.cur)
-				host.ButtonPass.text = host.ButtonPass.text..string.sub(host.password,myF.cur,myF.cur)
-				myF.cur = myF.cur + 1 
-				end	
-			else 
-			myF.cur = 1
-			host.hackAttempt = host.hackAttempt+1
-			end
-		--[[
-		elseif People and host and host.ButtonId and host.ButtonPass then
-			if host.ButtonId.text~='' then
-			local k = searchFieldValue(People,'acc',host.ButtonId.text)
-				if k then 
-					if host.ButtonPass.text ~= People[k].pass then
-					host.count = host.count+1
-						if host.count > 100 then
-						host.count = 0
-						host.ButtonPass.text = host.ButtonPass.text..string.sub(People[k].pass,myF.cur,myF.cur)
-						myF.cur = myF.cur+1
-						end
-					else myF.cur = 1
-					end
-				end
-			end
-		--]]
-		end		
-	end
-	
+  function PasswordBreaker(myF,host)
+    if host and host.password then
+    --host.password = host.password..'_'
+      if host.ButtonPass and host.ButtonPass.text~= host.password then
+      host.count = host.count+1        
+        if host.count > 50 then 
+        host.count  = 0         
+        --oldprint(myF.cur)
+        host.ButtonPass.text = host.ButtonPass.text..string.sub(host.password,myF.cur,myF.cur)
+        myF.cur = myF.cur + 1 
+        end  
+      else 
+      myF.cur = 1
+      host.hackAttempt = host.hackAttempt+1
+      end
+    --[[
+    elseif People and host and host.ButtonId and host.ButtonPass then
+      if host.ButtonId.text~='' then
+      local k = searchFieldValue(People,'acc',host.ButtonId.text)
+        if k then 
+          if host.ButtonPass.text ~= People[k].pass then
+          host.count = host.count+1
+            if host.count > 100 then
+            host.count = 0
+            host.ButtonPass.text = host.ButtonPass.text..string.sub(People[k].pass,myF.cur,myF.cur)
+            myF.cur = myF.cur+1
+            end
+          else myF.cur = 1
+          end
+        end
+      end
+    --]]
+    end    
+  end
+  
 --Firewall Bypassers: 55,56,57
-	function FirewallBypass(myF,host)
-		if host and (host.firewall~=nil) then
-			if (host.firewall==true) then
-				if host.level.firewall > myF.version then
-				System.message(locale.mustUpdateFirewallBypass..host.level.firewall,0)
-				host.trace = host.DEFAULT_TRACEBACK*2
-				myF:close()
-				else
-					host.firewall = false
-				end
-			end
-		end
-		if not Interface.connected then 
-		myF:close() 
-		System.message(locale.noHost,0)
-		end
-	end
+  function FirewallBypass(myF,host)
+    if host and (host.firewall~=nil) then
+      if (host.firewall==true) then
+        if host.level.firewall > myF.version then
+        System.message(locale.mustUpdateFirewallBypass..host.level.firewall,0)
+        host.trace = host.DEFAULT_TRACEBACK*2
+        myF:close()
+        else
+          host.firewall = false
+        end
+      end
+    end
+    if not Interface.connected then 
+    myF:close() 
+    System.message(locale.noHost,0)
+    end
+  end
 
 --Proxy Bypassers: 58,59,60,61
-	function ProxyBypass(myF,host)
-		if host and (host.proxy~=nil) then
-			if (host.proxy==true) then
-				if host.level.proxy > myF.version then
-				System.message(locale.mustUpdateProxyBypass..host.level.proxy,0)
-				host.trace = host.DEFAULT_TRACEBACK*2
-				myF:close()
-				else
-					host.proxy = false
-				end
-			end
-		end
-		if not Interface.connected then 
-		myF:close() 
-		System.message(locale.noHost,0)
-		end	
-	end
+  function ProxyBypass(myF,host)
+    if host and (host.proxy~=nil) then
+      if (host.proxy==true) then
+        if host.level.proxy > myF.version then
+        System.message(locale.mustUpdateProxyBypass..host.level.proxy,0)
+        host.trace = host.DEFAULT_TRACEBACK*2
+        myF:close()
+        else
+          host.proxy = false
+        end
+      end
+    end
+    if not Interface.connected then 
+    myF:close() 
+    System.message(locale.noHost,0)
+    end  
+  end
 
 --Monitor Bypass:62,63,64
-	function MonitorBypass(myF,host)
-		if host and (host.monitor~=nil) then
-			if (host.monitor==true) then
-				if host.level.monitor > myF.version then
-				host.trace = host.DEFAULT
-				System.message(locale.mustUpdateMonitorBypass..host.level.monitor,0)
-				host.trace = host.DEFAULT_TRACEBACK*2
-				myF:close()
-				else
-					host.monitor = false
-				end
-			end
-		end
-		if not Interface.connected then 
-		myF:close() 
-		System.message(locale.noHost,0)
-		end	
-	end
-	
+  function MonitorBypass(myF,host)
+    if host and (host.monitor~=nil) then
+      if (host.monitor==true) then
+        if host.level.monitor > myF.version then
+        host.trace = host.DEFAULT
+        System.message(locale.mustUpdateMonitorBypass..host.level.monitor,0)
+        host.trace = host.DEFAULT_TRACEBACK*2
+        myF:close()
+        else
+          host.monitor = false
+        end
+      end
+    end
+    if not Interface.connected then 
+    myF:close() 
+    System.message(locale.noHost,0)
+    end  
+  end
+  
 --Decypher: 53
-	function Decypher(myF,host)
-		if host and (host.cypher) then
-			if (host.cypher==true) then
-			math.randomseed(os.time())
-				local encryptionT = {}
-					for k=1,10 do 
-					encryptionT[k]={} 
-						for j=1,10 do encryptionT[k][j]=math.random(9) end
-					end
-				local cypheringLevel,done = 200,0
-				
-				while host.cypher do
-				updateEnv()
-					done = done + 1
-					local lengthBar = math.floor((done/cypheringLevel)*75)
-					drawrect(300,100,77,12)
-					screen:fillRect(301,101,lengthBar,10,BLUE)
-					print(20,30,locale.decyphering)
-					print(300,260,locale.backDec)
-					for y in ipairs(encryptionT) do
-						for x,t in ipairs(encryptionT[y]) do
-						t = math.random(9)
-						print(40+10*y,40+10*x,t)
-						end
-					end
-					if Controls.read():circle() then 
-					System.message(locale.closeDecypher,1)
-						if System.buttonPressed(1)=='yes' then
-						myF:close()
-						break
-						end
-					end
-					if done >= cypheringLevel then 
-					host.cypher = false 
-					myF:close()
-					end
-				swapBuffers()
-				end	
-				
-			else
-				myF:close()
-			end
-		end	
-	end
+  function Decypher(myF,host)
+    if host and (host.cypher) then
+      if (host.cypher==true) then
+      math.randomseed(os.time())
+        local encryptionT = {}
+          for k=1,10 do 
+          encryptionT[k]={} 
+            for j=1,10 do encryptionT[k][j]=math.random(9) end
+          end
+        local cypheringLevel,done = 200,0
+        
+        while host.cypher do
+        updateEnv()
+          done = done + 1
+          local lengthBar = math.floor((done/cypheringLevel)*75)
+          drawrect(300,100,77,12)
+          screen:fillRect(301,101,lengthBar,10,BLUE)
+          print(20,30,locale.decyphering)
+          print(300,260,locale.backDec)
+          for y in ipairs(encryptionT) do
+            for x,t in ipairs(encryptionT[y]) do
+            t = math.random(9)
+            print(40+10*y,40+10*x,t)
+            end
+          end
+          if Controls.read():circle() then 
+          System.message(locale.closeDecypher,1)
+            if System.buttonPressed(1)=='yes' then
+            myF:close()
+            break
+            end
+          end
+          if done >= cypheringLevel then 
+          host.cypher = false 
+          myF:close()
+          end
+        swapBuffers()
+        end  
+        
+      else
+        myF:close()
+      end
+    end  
+  end
 
 --Decrypter: 47,48,49,50,51,52
-	function Decrypter(myF,Interface)
-		local EncList = {}
-		if Interface then
-			for k,index in ipairs(Interface.dataList) do
-				if data[index].encryptionlvl > 0 then
-				table.insert(EncList,index)
-				end
-			end
-			if #EncList > 0 then
-			local str = locale.decrypterExplain
-				for k,value in ipairs(EncList) do str = str..k..': '..data[value].name..'\n' end
-				System.message(str,0)
-				local n_Index = tonumber(System.startOSK('',''))
-					if n_Index and EncList[n_Index] and data[EncList[n_Index]] then
-					local comp = (myF.version > data[EncList[n_Index]].encryptionlvl)
-					--oldprint('myF > Data ',comp)
-						if comp then 
-						data[EncList[n_Index]].encryptionlvl = 0
-						myF:close()
-						System.message(locale.confirmDecrypted,0)
-						else 						
-						System.message(locale.mustUpdateDecrypter..data[EncList[n_Index]].encryptionlvl,0)
-						myF:close()
-						end	
-					else System.message(locale.notValidDegree,0)
-					end
-			else
-				System.message(locale.noDataToDecrypt,0)
-				myF:close()
-			end
-		end
-	end
-	
+  function Decrypter(myF,Interface)
+    local EncList = {}
+    if Interface then
+      for k,index in ipairs(Interface.dataList) do
+        if data[index].encryptionlvl > 0 then
+        table.insert(EncList,index)
+        end
+      end
+      if #EncList > 0 then
+      local str = locale.decrypterExplain
+        for k,value in ipairs(EncList) do str = str..k..': '..data[value].name..'\n' end
+        System.message(str,0)
+        local n_Index = tonumber(System.startOSK('',''))
+          if n_Index and EncList[n_Index] and data[EncList[n_Index]] then
+          local comp = (myF.version > data[EncList[n_Index]].encryptionlvl)
+          --oldprint('myF > Data ',comp)
+            if comp then 
+            data[EncList[n_Index]].encryptionlvl = 0
+            myF:close()
+            System.message(locale.confirmDecrypted,0)
+            else             
+            System.message(locale.mustUpdateDecrypter..data[EncList[n_Index]].encryptionlvl,0)
+            myF:close()
+            end  
+          else System.message(locale.notValidDegree,0)
+          end
+      else
+        System.message(locale.noDataToDecrypt,0)
+        myF:close()
+      end
+    end
+  end
+  
 --Trace Tracker:65
 
 
@@ -335,7 +335,7 @@ end
 for k=55,57 do data[k]:linkToFunc(FirewallBypass) end
 for k=58,61 do data[k]:linkToFunc(ProxyBypass) end
 for k=62,64 do data[k]:linkToFunc(MonitorBypass) end
-			   data[53]:linkToFunc(Decypher)
-			   data[54]:linkToFunc(PasswordBreaker)
-			   --data[65]:linkToFunc(TraceTracking)
+         data[53]:linkToFunc(Decypher)
+         data[54]:linkToFunc(PasswordBreaker)
+         --data[65]:linkToFunc(TraceTracking)
 for k=47,52 do data[k]:linkToFunc(Decrypter) end

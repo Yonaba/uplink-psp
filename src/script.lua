@@ -1,15 +1,15 @@
 --[[/*
   =============================================================================
-  =																		                                        =
-  =					             UPLINK For PSP					                              =
-  =																			                                      =
-  =							 Started August '10							                              =
-  =																			                                      =
-  =					  Source Code: Roland Y.                                          =
+  =                                                                            =
+  =                       UPLINK For PSP                                        =
+  =                                                                            =
+  =               Started August '10                                            =
+  =                                                                            =
+  =            Source Code: Roland Y.                                          =
   =                                                                           =
-  =					Uses 'Uplink Hacker Elite' Original Graphics                      =
-  =																			                                      =
-  =																			                                      =
+  =          Uses 'Uplink Hacker Elite' Original Graphics                      =
+  =                                                                            =
+  =                                                                            =
   =============================================================================
   */
 --]]
@@ -18,18 +18,18 @@
 
 --lphmEmu is not executed on PSP, just on PC for debug
 if os.getenv("os")=='Windows_NT' then
-	require './Contents/Scripts/lphmEmu'
+  require './Contents/Scripts/lphmEmu'
 end
 
 
---Disables ME to use old Soud and Music Funcs	
+--Disables ME to use old Soud and Music Funcs  
 System.oaenable()
-	
+  
 --Loads Libraries
-require './Contents/Scripts/Constants'	
-require './Contents/Scripts/Sounds'	
-require './Contents/Scripts/Audio'	
-require './Contents/Data/Identities/ids'	
+require './Contents/Scripts/Constants'  
+require './Contents/Scripts/Sounds'  
+require './Contents/Scripts/Audio'  
+require './Contents/Data/Identities/ids'  
 require './Contents/Scripts/Core'
 require './Contents/Scripts/Cursor'
 require './Contents/scripts/GUI'

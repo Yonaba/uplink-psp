@@ -1,8 +1,8 @@
 --[[ Uplink For PSP
-	Game Resources definition File
-	]]
-	
-	
+  Game Resources definition File
+  ]]
+  
+  
 --Complete list of all Gateways
 
 H_gateway={
@@ -65,14 +65,14 @@ gateway[11]={x=441,y=201,w=7,h=7,id="Sydney",ip="255.1.1.1"}
 
 --Rankings
 H_rating = {
-	{_rate={['EN']="Noob",['FR']="Bleu"},_success=0,_comment={['EN']="A newbie freelance hacker who signed up recently.\nTotally harmless.",['FR']='Un newbie engage en tant qu\'agent libre.\nAttend de faire ses preuves.'}},
-	{_rate={['EN']="Beginner",['FR']="Debutant"},_success=2,_comment={['EN']="A rookie freelance hacker who made some successful operations.",['FR']='Un nouvel agent libre qui a mene avec succes quelques operations.'}},
-	{_rate={['EN']="Intermediate",['FR']="Intermediaire"},_success=4,_comment={['EN']="We consider him as a growing threat.\nMade some successfull operations.",['FR']="Considere comme une menace grandissante.\nA mene a bien quelques operations delicates."}},
-	{_rate={['EN']="Skilled",['FR']="Doue"},_success=9,_comment={['EN']="Keen on security systems hacking, potentially dangerous.",['FR']="Experimente dans le hack des systemes securises.\nMenace potencielle."}},
-	{_rate={['EN']="Experienced",['FR']="Experimente"},_success=12,_comment={['EN']="This agent has lot of experience in mainframe hacking, and secured systems bypassing.\nBeware of him.",['FR']="Cet agent a beaucoup d\'experience dans le hack des serveurs et systemes securises.\nMefiez-vous-en."}},
-	{_rate={['EN']="Elite",['FR']="Hackeur d\'elite"},_success=15,_comment={['EN']="A very skilled agent.\nDid efficient work for many corporations.",['FR']="Un agent tres doue.\nA mene a bien plusieurs operations delicates."}},
-	{_rate={['EN']="Veteran",['FR']="Veteran"},_success=20,_comment={['EN']="A very experienced hacker,well known in world of hacking.",['FR']="Hackeur tres experimente, bien connu des services de securite informatiques."}},
-	{_rate={['EN']="Expert",['FR']="Expert"},_success=25,_comment={['EN']="A highly skilled hacker, succeeded in tons of missions, probably one of the most dangerous hackers all over the Net.",['FR']='Hackeur tres doue, specialiste en missions delicates, probablement l\'un des plus dangereux hackeurs actif sur le Net.'}},
-	{_rate={['EN']="Legend",['FR']="Legende"},_success=27,_comment={['EN']="This agent rocketed to fame in the world of hacking.\nLeaded many successful operations.",['FR']='Hackeur ayant atteint la notoriete mondiale.'}},
-	{_rate={['EN']="Living god",['FR']="dieu vivant"},_success=30,_comment={['EN']="Currently ranked as the most threatening hacker ever.",['FR']='Black-Liste au pantheon des hackeurs de legende.'}},
-	}
+  {_rate={['EN']="Noob",['FR']="Bleu"},_success=0,_comment={['EN']="A newbie freelance hacker who signed up recently.\nTotally harmless.",['FR']='Un newbie engage en tant qu\'agent libre.\nAttend de faire ses preuves.'}},
+  {_rate={['EN']="Beginner",['FR']="Debutant"},_success=2,_comment={['EN']="A rookie freelance hacker who made some successful operations.",['FR']='Un nouvel agent libre qui a mene avec succes quelques operations.'}},
+  {_rate={['EN']="Intermediate",['FR']="Intermediaire"},_success=4,_comment={['EN']="We consider him as a growing threat.\nMade some successfull operations.",['FR']="Considere comme une menace grandissante.\nA mene a bien quelques operations delicates."}},
+  {_rate={['EN']="Skilled",['FR']="Doue"},_success=9,_comment={['EN']="Keen on security systems hacking, potentially dangerous.",['FR']="Experimente dans le hack des systemes securises.\nMenace potencielle."}},
+  {_rate={['EN']="Experienced",['FR']="Experimente"},_success=12,_comment={['EN']="This agent has lot of experience in mainframe hacking, and secured systems bypassing.\nBeware of him.",['FR']="Cet agent a beaucoup d\'experience dans le hack des serveurs et systemes securises.\nMefiez-vous-en."}},
+  {_rate={['EN']="Elite",['FR']="Hackeur d\'elite"},_success=15,_comment={['EN']="A very skilled agent.\nDid efficient work for many corporations.",['FR']="Un agent tres doue.\nA mene a bien plusieurs operations delicates."}},
+  {_rate={['EN']="Veteran",['FR']="Veteran"},_success=20,_comment={['EN']="A very experienced hacker,well known in world of hacking.",['FR']="Hackeur tres experimente, bien connu des services de securite informatiques."}},
+  {_rate={['EN']="Expert",['FR']="Expert"},_success=25,_comment={['EN']="A highly skilled hacker, succeeded in tons of missions, probably one of the most dangerous hackers all over the Net.",['FR']='Hackeur tres doue, specialiste en missions delicates, probablement l\'un des plus dangereux hackeurs actif sur le Net.'}},
+  {_rate={['EN']="Legend",['FR']="Legende"},_success=27,_comment={['EN']="This agent rocketed to fame in the world of hacking.\nLeaded many successful operations.",['FR']='Hackeur ayant atteint la notoriete mondiale.'}},
+  {_rate={['EN']="Living god",['FR']="dieu vivant"},_success=30,_comment={['EN']="Currently ranked as the most threatening hacker ever.",['FR']='Black-Liste au pantheon des hackeurs de legende.'}},
+  }

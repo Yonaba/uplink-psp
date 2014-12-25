@@ -1,7 +1,7 @@
 --[[ Uplink For PSP
-	Constants definition File
-	]]
-	
+  Constants definition File
+  ]]
+  
 --Basic Colors
 WHITE=Color.new(255,255,255,255)
 RED=Color.new(255,0,0,255)

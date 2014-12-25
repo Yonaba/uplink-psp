@@ -1,7 +1,7 @@
 --[[ Uplink For PSP
-	Sounds Loader 
-	]]
-	
+  Sounds Loader 
+  ]]
+  
 --Sounds loader
 
 AddLink = Sound.load('./Contents/audio/sounds/addLinkBounce.wav',false)

@@ -1,8 +1,8 @@
 --[[ Uplink For PSP
-	Identities definition File
-	 - Creates all characters id's
-	]]
-	
+  Identities definition File
+   - Creates all characters id's
+  ]]
+  
 People={
 {name="Allan",name2="Wilson",pass="burdenage",acc="1229",img=Image.load("./Contents/graphics/photos/Image1.jpg")},
 {name="John",name2="Baxter",pass="rosebud",acc="2891",img=Image.load("./Contents/graphics/photos/Image2.jpg")},
